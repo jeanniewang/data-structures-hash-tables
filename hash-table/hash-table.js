@@ -61,6 +61,7 @@ class HashTable { // get O(1), set O(1), delete O(1)
     }
 
 
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // data retention
     resize() {
         const newData = new Array(2*this.capacity).fill(null);
