@@ -28,18 +28,16 @@ class HashTable { // get O(1), set O(1), delete O(1)
 
     hashMod(key) {
         // Get index after hashing
-        const bucketIndex = this.hash(key) % this.data.length;
+        const bucketIndex = this.hash(key) % this.capacity;
         return bucketIndex;
     }
 
     read(key) {
         const bucketIndex = this.hashMod(key);
-        console.log(bucketIndex)
         if (!this.data[bucketIndex]) {
             return undefined;
         }
 
-        
         let currPair = this.data[bucketIndex];
         while(currPair.key !== key && currPair.next) {
             currPair = currPair.next;
@@ -63,10 +61,18 @@ class HashTable { // get O(1), set O(1), delete O(1)
     }
 
 
+    // data retention
     resize() {
         const newData = new Array(2*this.capacity).fill(null);
         for (let i = 0; i < this.capacity; i ++) {
-            newData[i] = this.data[i];
+            if (this.data[i].next) {
+                newData[i] = this.data[i];
+                newData[i + this.capacity] = this.data[i].next;
+                newData[i].next = null;
+            } else {
+                // for node without collision
+                newData[i + this.capacity] = this.data[i];
+            }
         }
 
         this.capacity *= 2;
@@ -111,11 +117,20 @@ class HashTable { // get O(1), set O(1), delete O(1)
 module.exports = HashTable;
 
 // let hashTable = new HashTable(2);
+// let value;
 // hashTable.insert("key1", "value1");
+// value = hashTable.read('key1');
 // hashTable.insert("key2", "value2");
+// value = hashTable.read('key2')
 // hashTable.insert("key3", "value3");
+// value = hashTable.read('key3')
 
 // hashTable.resize();
-// // console.log(hashTable.data[0])
-// let value = hashTable.read('key1')
+// console.log(hashTable.data);
+
+// value = hashTable.read('key1')
 // console.log(value);
+// value = hashTable.read('key2')
+// console.log(value)
+// value = hashTable.read('key3')
+// console.log(value)

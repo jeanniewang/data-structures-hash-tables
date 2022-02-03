@@ -84,7 +84,6 @@ describe ('Hash Table', function () {
     expect(hashTable.count).to.equal(3);
     expect(hashTable.capacity).to.equal(capacity * 2);
     expect(hashTable.data.length).to.equal(capacity * 2);
-    console.log(hashTable.data[0])
 
     expect(hashTable.read("key1")).to.equal("value1");
     expect(hashTable.read("key2")).to.equal("value2");
